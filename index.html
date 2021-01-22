@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+      Windows PowerShell: Desired State Configuration
+    </title>
+
+    <meta name="description" content="An introduction to Windows PowerShell Desired State Configuration.">
+    <link rel="canonical" href="https://github.com/SteveByerly/dsc-demo">
+
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="static/images/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/png" sizes="32x32" href="static/images/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="static/images/favicons/apple-touch-icon.png">
+    <link rel="manifest" href="static/images/favicons/site.webmanifest">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#333333">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,700,700i%7CMaitree:200,300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
+
+    <link rel="stylesheet" type='text/css' media='all' href="static/css/lib.css">
+    <link rel="stylesheet" type='text/css' media='all' href="static/css/main.css">
+  </head>
+
+  <body>
+    <header role="banner">
+      <nav role="navigation">
+        <a class="alignleft p-2" href="index.html" title="SteveByerly">
+          Steve Byerly
+        </a>
+
+        <ul>
+          <li class="github">
+            <a rel="external" href="https://github.com/SteveByerly" title="Github" target="_blank">
+              <span class="fab fa-github"></span>
+              <em>SteveByerly</em>
+            </a>
+          </li>
+
+          <li class="twitter">
+            <a rel="external" href="https://twitter.com/SteveByerly" title="Twitter" target="_blank">
+              <span class="fab fa-twitter"></span>
+              <em>@SteveByerly</em>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main role="main">
+      <article id="webslides" class="vertical">
+        <!-- SlideStart: Title -->
+        <section class="bg-black-blue aligncenter">
+          <span class="background dark" style="background-image:url('https://source.unsplash.com/YZ8tT2Nn4is');"></span>
+          <!--.wrap -->
+          <div class="wrap">
+            <h1 class="text-landing text-serif">
+              Desired State Configuration
+            </h1>
+            <p class="text-subtitle">
+              infrastructure as code
+            </p>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+        <!-- SlideEnd: Bio -->
+
+        <!-- GroupStart: Introduction -->
+        <section class="bg-black-blue">
+          <div class="wrap aligncenter">
+            <h1 class="text-landing text-serif">
+              Introduction
+            </h1>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <!-- SlideStart: Bio -->
+        <section class="bg-blue frame">
+          <div class="wrap">
+            <div class="grid sm vertical-align">
+              <div class="column">
+                <h3 class="aligncenter">
+                  /usr/bin/whoami
+                </h3>
+              </div>
+              <div class="column bg-white shadow">
+                <h2>
+                  Steve Byerly
+                </h2>
+
+                <ul class="description">
+                  <li class="flexblock">
+                    <strong class="text-label">
+                      Work:
+                    </strong>
+                    <div>
+                      Senior Software Engineer @ <a href="https://intellitect.com/" target="_blank" title="Intellitect Website">Intellitect</a><br />
+                      <a href="https://intellitect.com/join-our-team">https://intellitect.com/join-our-team</a>
+                    </div>
+                  </li>
+
+                  <li class="flexblock">
+                    <strong class="text-label">
+                      Github:
+                    </strong>
+                    <div>
+                      <a href="https://github.com/SteveByerly" target="_blank">github.com/SteveByerly</a>
+                    </div>
+                  </li>
+
+                  <li class="flexblock">
+                    <strong class="text-label">
+                      Twitter:
+                    </strong>
+                    <div>
+                      <a href="https://twitter.com/SteveByerly" target="_blank">@SteveByerly</a>
+                    </div>
+                  </li>
+
+                  <li class="flexblock">
+                    <strong class="text-label">
+                      .NET Users Group
+                    </strong>
+                    <div>
+                      <a href="https://www.meetup.com/Spokane-NET-User-Group" target="_blank">
+                        https://www.meetup.com/Spokane-NET-User-Group
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- SlideEnd: Bio -->
+
+
+        <!-- SlideStart: Housekeeping -->
+        <section>
+          <div class="wrap">
+            <div class="card-50">
+              <h1 class="flex-content aligncenter">
+                Housekeeping
+              </h1>
+
+              <div>
+                <ul class="flexblock specs">
+                  <li>
+                    <div>
+                      <span class="fas fa-question-circle text-green"></span>
+                      <div>
+                        <h2>Questions?</h2>
+                        <p class="alignleft">
+                          Please Ask!<br />
+                          Reach out by email if you have more questions.
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li>
+                    <div>
+                      <span class="far fa-clock text-green"></span>
+                      <div>
+                        <h2>Miss Something?</h2>
+                        <p class="alignleft">
+                          Please let me know. Slides and examples will be available online.<br />
+                          <a href="https://github.com/SteveByerly/dsc-demo">
+                            https://github.com/SteveByerly/dsc-demo
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div>
+                      <span class="fas fa-exclamation-circle text-green"></span>
+                      <div>
+                        <h2>Do/Don't, Should/Shouldn't, Can/Can't</h2>
+                        My opinions. Do what works best for you.
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </section>
+        <!-- SlideEnd: Housekeeping -->
+        <!-- GroupEnd: Introduction -->
+
+        <!-- GroupStart: Intro to DSC -->
+        <section class="bg-black-blue frame">
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap aligncenter">
+            <h3 class="text-landing text-serif">
+              Background &amp; Purpose
+            </h3>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap">
+            <div class="content-center">
+              <h2 class="mb-2">
+                What is DSC?
+              </h2>
+
+              <hr />
+
+              <p class="text-intro">
+                In Microsoft's Words:
+              </p>
+
+              <blockquote>
+                <p class="mb-4">
+                  "DSC is a management platform in PowerShell that enables you to manage your IT and development infrastructure with configuration as code"
+                </p>
+              </blockquote>
+            </div>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap">
+            <div class="content-center">
+              <h2 class="mb-2">
+                What is DSC?
+              </h2>
+
+              <hr />
+
+              <p class="text-intro">
+                In My Words:
+              </p>
+
+              <blockquote>
+                <p class="mb-4">
+                  Configure computers using PowerShell<br />
+                  but with better syntax, less effort, and fewer errors
+                </p>
+              </blockquote>
+            </div>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap">
+            <div class="grid vertical-align">
+              <div class="column mr-4">
+                <figure class="mb-3">
+                  <h4>
+                    PowerShell
+                  </h4>
+                  <pre class="powershell">
+$chocoExePath = 'C:\ProgramData\Chocolatey\bin'
+
+if (-not $($env:Path).ToLower().Contains($($chocoExePath).ToLower())) {
+  Set-ExecutionPolicy Bypass -Scope Process -Force
+  Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+}
+
+$PropPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+Set-ItemProperty $PropPath -Name "ConsentPromptBehaviorAdmin" -Value 00000000 -Force
+</pre>
+                  <small class="alignright">*Example found in production use</small>
+                </figure>
+                <figure>
+                  <h4>
+                    DSC PowerShell
+                  </h4>
+                  <pre class="powershell">
+cChocoInstaller "Install" {
+  InstallDir = "c:\choco"
+}
+
+UserAccountControl "DisableAdminConsent" {
+  ConsentPromptBehaviorAdmin = 0
+}
+</pre>
+                </figure>
+              </div>
+              <div class="column">
+                <h4 class="mb-2">
+                  Better Syntax
+                </h4>
+                <p>
+                  PowerShell can be <strong class="text-red">messy</strong><br />
+                  This isn't really unique to PowerShell - most shell scripts suffer with organization and formatting, but the language/syntax doesn't do it any favors.
+                </p>
+                <h4 class="mb-2">
+                  Less Effort
+                </h4>
+                <p>
+                  Using declarative configurations instead of writing imperative code greatly reduces the number of steps to perform any action.
+                </p>
+                <h4 class="mb-2">
+                  Fewer Errors
+                </h4>
+                <p>
+                  Maintaining less code reduces the surface area for bugs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap size-40">
+
+            <div class="bg-white shadow">
+              <h3 class="mb-1">
+                Existing Tools
+              </h3>
+
+              <hr class="mb-3 mt-2" />
+
+              <p class="text-intro">
+                Several other tools already provide similar functionality:
+              </p>
+              <ul class="mb-3">
+                <li><strong>Ansible</strong> - Python</li>
+                <li><strong>Chef</strong> - Ruby</li>
+                <li><strong>Puppet</strong> - Ruby</li>
+              </ul>
+
+              <p class="text-intro">
+                Why not use one these instead?
+              </p>
+              <ul>
+                <li>Use language / ecosystem developers are already familiar with</li>
+                <li>Reduce the number of dependencies to manage</li>
+                <li>
+                  Maybe you should
+                  <ul>
+                    <li>Every project has different needs</li>
+                  </ul>
+                </li>
+                <li>
+                  You still can!
+                  <ul>
+                    <li>Most of these tools have their own resources to work with DSC resources directly</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <!-- GroupStart: Core Concepts -->
+        <section class="bg-black-blue frame">
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap aligncenter">
+            <h3 class="text-landing text-serif">
+              Core Concepts
+            </h3>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap">
+            <h3>
+              Components
+            </h3>
+
+            <ul class="flexblock border">
+              <li class="bg-white">
+                <p class="text-intro">
+                  <strong>Resources</strong>
+                </p>
+                <ul class="list-styled">
+                  <li>
+                    Core building block
+                  </li>
+                  <li>
+                    Isolated instance of a "thing"
+                    <ul class="ml-2">
+                      <li>Environment variable</li>
+                      <li>Local user</li>
+                      <li>Windows feature</li>
+                      <li>SQL database</li>
+                      <li>AD Domain</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Contains code / logic to perform the action
+                  </li>
+                  <li>
+                    Parameterized for customization
+                  </li>
+                </ul>
+              </li>
+
+              <li class="bg-white">
+                <p class="text-intro">
+                  <strong>Nodes</strong>
+                </p>
+                <ul class="list-styled">
+                  <li>The computer / server to configure</li>
+                  <li>
+                    Can be
+                    <ul class="ml-2">
+                      <li>Localhost</li>
+                      <li>Static / pre-defined hosts</li>
+                      <li>Dynamic hosts</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="bg-white">
+                <p class="text-intro">
+                  <strong>Configurations</strong>
+                </p>
+                <ul class="list-styled">
+                  <li>
+                    Define the:
+                    <ul>
+                      <li>Nodes to configure</li>
+                      <li>Resources to deploy</li>
+                      <li>Relation of the two</li>
+                    </ul>
+                  </li>
+                  <li>Responsible for defining / passing parameters to resources</li>
+                  <li>Specifies dependency chain between resources if necessary</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap size-40">
+
+            <div class="bg-white shadow">
+              <h3 class="mb-1">
+                DSC Resources
+              </h3>
+
+              <hr class="mb-3 mt-2" />
+
+              <p class="text-intro">
+                Resources encapsulate the code necessary to describe, create, update, and delete their underlying objects of interest.
+              </p>
+
+              <p class="mb-4">
+                A key factor of resources is that they are <strong>idempotent</strong>, meaning they can be run multiple times on the same system with the same outcome.
+              </p>
+
+              <ul class="description">
+                <li class="flexblock">
+                  <strong class="text-label">
+                    GetState
+                  </strong>
+                  <div>
+                    Retrieves the state of the resource as it is configured on the target Node
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    TestState
+                  </strong>
+                  <div>
+                    Determines if the target node is currently compliant with the resource's desired state
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    SetState
+                  </strong>
+                  <div>
+                    Attempts to update the Node to become compliant with the resource's desired state
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap">
+            <div class="grid vertical-align">
+              <div class="column">
+                <figure class="aligncenter size-80">
+                  <pre class="powershell">
+
+  Configuration "DemoConfiguration" { # 1
+    param ( # 2
+      [Parameter(Mandatory=$true)]
+      [String]
+      $TimeZoneId
+    )
+
+    Node "localhost" { # 3
+      xEnvironment "TestKey" { # 4
+        Ensure = "Present" # 5
+        Name = "TestKey"
+        Value = "TestValue"
+      }
+
+      TimeZone "Default" {
+        DependsOn = "[xEnvironment]TestKey" # 6
+
+        IsSingleInstance = "Yes" # 7
+        TimeZone = $TimeZoneId
+      }
+    }
+  }
+  </pre>
+                </figure>
+              </div>
+
+              <div class="column">
+                <h2>
+                  Configuration File Syntax
+                </h2>
+                <hr />
+                <ol>
+                  <li>
+                    The block defining the Configuration, identified by the provided name (e.g. <code>DemoConfiguration</code>)
+                    <ul>
+                      <li>
+                        Similar to function syntax
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    Parameters block allowing dynamic values to be supplied during compilation
+                  </li>
+                  <li>
+                    The Node(s) in which to deploy the configuration file
+                    <ul>
+                      <li>
+                        The name of the node (e.g. <code>localhost</code>) will be used to identify the computers that should be configured, either pushing the compiled .MOF file to that server or supplying the file when the server pulls the latest configuration.
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    The Resource(s) to configure, identified by the provided name.
+                    <ul>
+                      <li>
+                        The name of the resource (e.g. <code>TestKey</code>) can be used to identify dependencies. Care must be taken when changing the name of any resource.
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    The key-value properties of the resource
+                  </li>
+                  <li>
+                    Specifying a dependency to another resource using the format <code>[ResourceType]ResourceName</code>
+                  <li>
+                    Special parameter key used to ensure only one instance of the resource exists
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap size-60">
+            <div class="bg-white shadow">
+              <h3 class="mb-1">
+                DSC Resource Modules
+              </h3>
+
+              <hr class="mb-3 mt-2" />
+
+              <p>
+                Several resources already exist as open-source PS modules:
+              </p>
+
+              <ul class="description">
+                <li class="flexblock">
+                  <strong class="text-label">
+                    xPSDesiredStateConfiguration
+                  </strong>
+                  <div>
+                    Configuring common operating systems features, files, and settings
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    ComputerManagementDsc
+                  </strong>
+                  <div>
+                    Computer management tasks such as renaming the computer, joining a domain, or scheduling tasks
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    xWindowsUpdate
+                  </strong>
+                  <div>
+                    Configuration of Microsoft Windows Update and/or installing Windows updates
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    SqlServerDsc
+                  </strong>
+                  <div>
+                    Deployment and configuration of Microsoft SQL Server
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    cChoco
+                  </strong>
+                  <div>
+                    Installation and management of Chocolatey packages
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap">
+            <div class="grid vertical-align">
+              <div class="column">
+                <figure class="size-80 aligncenter">
+                  <img alt="push model" src="static/images/push.png">
+                </figure>
+              </div>
+              <div class="column">
+                <h3 class="mb-2">
+                  Push Model
+                </h3>
+
+                <ol>
+                  <li>
+                    The configuration server compiles the configuration files
+                  </li>
+                  <li>
+                    The compiled .MOF files are pushed to the nodes defined within the configuration
+                  </li>
+                  <li>
+                    Each node is then responsible for ensuring the configuration is applied
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap">
+            <div class="grid vertical-align">
+              <div class="column">
+                <figure class="size-80 aligncenter">
+                  <img alt="push model" src="static/images/pull.png">
+                </figure>
+              </div>
+              <div class="column">
+                <h3 class="mb-2">
+                  Pull Model
+                </h3>
+
+                <ol>
+                  <li>
+                    The system asks the configuration server if there are configuration changes
+                  </li>
+                  <li>
+                    If there are, the configuration files are downloaded from the server
+                  </li>
+                  <li>
+                    The node applies the updated configuration
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section class="bg-black-blue frame">
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap aligncenter">
+            <h3 class="text-landing text-serif">
+              Live Demo
+            </h3>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+        <section>
+          <header>
+            <p class="text-context">
+              Intro to Desired State Configuration
+            </p>
+          </header>
+          <div class="wrap size-60">
+            <div class="bg-white shadow">
+              <h3 class="mb-1">
+                Example Source Code
+              </h3>
+
+              <hr />
+
+              <ul class="description">
+                <li class="flexblock">
+                  <strong class="text-label">
+                    setup.ps1
+                  </strong>
+                  <div>
+                    Installs the PS modules used by examples scripts
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    configure.psm1
+                  </strong>
+                  <div>
+                    Compiles and apply the Demo DSC configuration (<code>DemoConfiguration</code>)
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    demo.psm1
+                  </strong>
+                  <div>
+                    Example DSC Configuration
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    demo.psd1
+                  </strong>
+                  <div>
+                    Configuration data used for the DemoConfiguration
+                  </div>
+                </li>
+
+                <li class="flexblock">
+                  <strong class="text-label">
+                    S3FileResource.psm1
+                  </strong>
+                  <div>
+                    Example custom DSC resource that ensures a file in AWS S3 has been downloaded
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- .end .wrap -->
+        </section>
+
+      </article>
+    </main>
+
+    <script src="static/js/lib.min.js"></script>
+    <script src="static/js/fontawesome.min.js"></script>
+    <script src="static/js/highlight.min.js"></script>
+    <script>
+      window.ws = new WebSlides();
+      var preTags = document.getElementsByTagName('pre');
+      [...preTags].forEach(block => hljs.highlightBlock(block));
+    </script>
+  </body>
+</html>
